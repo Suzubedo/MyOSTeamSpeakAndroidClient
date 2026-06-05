@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">TS3 Client</string>
+    <string name="settings_title">Audio &amp; Connection Settings</string>
+    <string name="action_connect">Connect</string>
+    <string name="action_disconnect">Disconnect</string>
+    <string name="status_disconnected">Disconnected</string>
+    <string name="status_connecting">Connecting…</string>
+    <string name="hint_host">Server address (e.g. ts.example.com)</string>
+    <string name="hint_port">Port (default 9987)</string>
+    <string name="hint_nick">Nickname</string>
+    <string name="hint_password">Server password (optional)</string>
+    <string name="label_input_device">Microphone (input)</string>
+    <string name="label_output_device">Speaker (output)</string>
+    <string name="label_prefer_bt">Prefer Bluetooth when set to Automatic</string>
+    <string name="open_settings">Settings</string>
+</resources>

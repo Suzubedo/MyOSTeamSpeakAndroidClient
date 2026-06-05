@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.TS3Client" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorOnPrimary">#06231A</item>
+        <item name="android:colorBackground">@color/bg</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="android:statusBarColor">@color/bg</item>
+    </style>
+    <style name="Theme.TS3Client.Settings" parent="Theme.Material3.Dark">
+        <item name="colorPrimary">@color/accent</item>
+    </style>
+</resources>

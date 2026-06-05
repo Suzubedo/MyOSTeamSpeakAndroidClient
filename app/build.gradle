@@ -1,0 +1,65 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.ts3client.app'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.ts3client.app"
+        minSdk 34          // Android 14
+        targetSdk 35       // Android 15
+        versionCode 1
+        versionName "0.1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    packaging {
+        resources {
+            // ts3j / BouncyCastle pull in duplicate metadata files
+            excludes += ['META-INF/*.kotlin_module', 'META-INF/DEPENDENCIES',
+                         'META-INF/LICENSE*', 'META-INF/NOTICE*', 'META-INF/INDEX.LIST',
+                         // BC ships localized cert-path message bundles that
+                         // collide when BouncyCastle appears twice on the classpath
+                         // (once transitively via ts3j, once declared explicitly).
+                         'org/bouncycastle/x509/*.properties',
+                         'org/bouncycastle/**/*.properties']
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.preference:preference:1.2.1'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'androidx.lifecycle:lifecycle-service:2.8.4'
+
+    // TeamSpeak 3 full-client protocol implementation (reverse-engineered).
+    // Provides the connection handshake, identity crypto, packet delivery and
+    // the encrypted UDP voice channel. We supply Android audio I/O on top.
+    //
+    // NOTE: ts3j already pulls in a full BouncyCastle (bcprov-jdk15on) for its
+    // protocol crypto, so we deliberately do NOT add bcprov-jdk18on ourselves —
+    // doing so put the same classes on the classpath under two artifact names
+    // and broke the build with thousands of "Duplicate class" errors.
+    implementation 'com.github.manevolent:ts3j:1.0.2'
+
+    // Opus codec for Android (voice payload). Concentus is a PURE-JAVA port,
+    // so it runs on ART with no native .so libraries (unlike JNI wrappers such
+    // as opus4j, whose prebuilt natives are desktop-only and crash on Android).
+    implementation 'io.github.jaredmdobson:concentus:1.0.2'
+}
