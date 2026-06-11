@@ -56,9 +56,17 @@ public class Ts3Connection {
                         password == null || password.isEmpty() ? null : password,
                         10000L);
 
-                client.subscribeAll();
-                for (Client c : client.listClients()) {
-                    try { client.getClientInfo(c.getId()); } catch (Exception ignored) {}
+                try {
+                    client.subscribeAll();
+                } catch (Exception e) {
+                    Log.w(TAG, "subscribeAll failed (non-fatal): " + e.getMessage());
+                }
+                try {
+                    for (Client c : client.listClients()) {
+                        try { client.getClientInfo(c.getId()); } catch (Exception ignored) {}
+                    }
+                } catch (Exception e) {
+                    Log.w(TAG, "listClients failed (non-fatal): " + e.getMessage());
                 }
 
                 connected = true;
